@@ -13,7 +13,7 @@ const Forecast = () => {
                 <>
                     <h2 className="text-left">Forecast</h2>
                     <Row className="py-2" style={{overflow: "auto", flexWrap: "nowrap"}}>
-                        {forecastWeather.list.map(forecast => <ForecastCard key={forecast.dt} forecast={forecast}/>)}
+                        {forecastWeather.list.map(forecast => <ForecastCard key={forecast.dt} forecast={forecast} timezone={forecastWeather.city.timezone}/>)}
                     </Row>
                 </>
             }

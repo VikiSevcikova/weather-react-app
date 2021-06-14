@@ -5,9 +5,9 @@ import {API_KEY} from "../../config";
 export const WeatherContext = React.createContext();
 
 const initialState = {
+    showPopUp: false,
     isMetricUnit : true,
     city : "Vancouver",
-    showPopUp: false
 }
 
 const reducer = (state, action) => {
@@ -18,7 +18,7 @@ const reducer = (state, action) => {
             isMetricUnit : !state.isMetricUnit
         }
     case "CHANGE_CITY":
-        console.log("WEATHER CONTEXT:"+action.city)
+        console.log("WEATHER CONTEXT CITY:"+action.city)
         return {
             ...state,
             city : action.city
@@ -26,7 +26,7 @@ const reducer = (state, action) => {
     case "SHOW_POPUP":
         return {
             ...state,
-            showPopUp : action.show
+            showPopUp : !state.showPopUp
         }
     default:
         return state;
@@ -48,8 +48,8 @@ export const WeatherProvider = (props) => {
           setForecastWeather(f.data);
         } catch (error) {
           console.error(error);
-          dispatch({type: 'SHOW_POPUP', show: true});
-          dispatch({type: 'SHOW_POPUP', city: "Vancouver"});
+          dispatch({type: 'SHOW_POPUP'});
+          dispatch({type: 'CHANGE_CITY', city: "Vancouver"});
         }
     }
 

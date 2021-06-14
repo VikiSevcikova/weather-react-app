@@ -2,15 +2,17 @@ import { useEffect, useState, useContext } from "react";
 import {Row, Col} from "react-bootstrap";
 import { WeatherContext } from "../WeatherContext/WeatherContext";
 
-const ForecastCard = ({forecast}) => {
+const ForecastCard = ({forecast, timezone}) => {
     const { state } = useContext(WeatherContext);
     const { isMetricUnit } = state;
     const [time, setTime] = useState();
+    console.log(timezone);
    
     useEffect(()=>{
-        let t = new Date(forecast.dt*1000).toLocaleTimeString(navigator.language, {
+        let t = new Date(forecast.dt*1000+(timezone*1000)).toLocaleTimeString(navigator.language, {
             hour: '2-digit',
-            minute:'2-digit'
+            minute:'2-digit',
+            timeZone: 'UTC'
           });
         setTime(t);
     },[]);

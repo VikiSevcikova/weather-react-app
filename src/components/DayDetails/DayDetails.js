@@ -9,20 +9,21 @@ const DayDetails = () => {
   const { isMetricUnit } = state;
   const [sunrise, setSunrise] = useState();
   const [sunset, setSunset] = useState();
-
   useEffect(()=>{
     if(!dailyWeather) return;
-    let sr = new Date(dailyWeather.sys.sunrise*1000).toLocaleTimeString(navigator.language, {
+    let sr = new Date(dailyWeather.sys.sunrise*1000+(dailyWeather.timezone*1000)).toLocaleTimeString(navigator.language, {
       hour: '2-digit',
-      minute:'2-digit'
+      minute:'2-digit',
+      timeZone: 'UTC'
     });
     setSunrise(sr);
-    let ss = new Date(dailyWeather.sys.sunset*1000).toLocaleTimeString(navigator.language, {
+    let ss = new Date(dailyWeather.sys.sunset*1000+(dailyWeather.timezone*1000)).toLocaleTimeString(navigator.language, {
       hour: '2-digit',
-      minute:'2-digit'
+      minute:'2-digit',
+      timeZone: 'UTC'
     });
     setSunset(ss);
-  }, []);
+  }, [dailyWeather]);
 
   return (
     <Container className="mt-5">

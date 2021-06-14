@@ -23,7 +23,7 @@ const WeatherDetails = () => {
                 <Row>
                     <Col xs={4}>
                         <p>Feels like: {dailyWeather.main.feels_like}° {isMetricUnit? "C" : "F"}</p>
-                        <p>Visibility: {dailyWeather.visibility}</p>
+                        <p>Visibility: {dailyWeather.visibility/1000} km</p>
                     </Col>
                     <Col xs={4}>
                         <p>Wind: {dailyWeather.wind.speed} {isMetricUnit? "m/s" : "mph"}</p>
