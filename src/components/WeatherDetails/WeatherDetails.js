@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { WeatherContext } from "../WeatherContext/WeatherContext";
 
@@ -10,6 +10,20 @@ const WeatherDetails = () => {
     dispatch({ type: "CHANGE_UNIT" });
   };
 
+  const [today, setToday] = useState();
+  const[weekday, setWeekday] = useState();
+
+  useEffect(()=>{
+    if(!dailyWeather) return;
+    setToday(new Date(dailyWeather.dt*1000+(dailyWeather.timezone*1000)).toLocaleDateString(navigator.language, {
+      timeZone: 'UTC'
+    }));
+    setWeekday(new Date(dailyWeather.dt*1000+(dailyWeather.timezone*1000)).toLocaleDateString(navigator.language, {
+      timeZone: 'UTC',
+      weekday: 'short'
+    }));
+  },[dailyWeather])
+
   return (
     <Container className="mt-5">
       {dailyWeather && (
@@ -17,9 +31,12 @@ const WeatherDetails = () => {
           <h3>
             {dailyWeather.name}, {dailyWeather.sys.country}
           </h3>
+          <h5>
+            {weekday}, {today}
+          </h5>
           <Row className="d-flex justify-content-center align-items-center">
             <h1 onClick={changeUnit}>
-              {Math.floor(dailyWeather.main.temp)}° {isMetricUnit ? "C" : "F"}
+              {Math.floor(dailyWeather.main.temp)} {isMetricUnit ? "°C" : "°F"}
             </h1>
           </Row>
 
